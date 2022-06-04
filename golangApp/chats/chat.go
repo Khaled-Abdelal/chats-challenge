@@ -1,4 +1,4 @@
-package chat
+package chats
 
 type Chat struct {
 	ApplicationToken string `json:"applicationToken"`

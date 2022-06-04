@@ -3,6 +3,8 @@ tags:
     description: applications API
   - name: chats
     description: chats API
+  - name: messages
+    description: messages API
 
 paths:
   # [GET] applications
@@ -133,7 +135,82 @@ paths:
           in: path
           description: chat number
           required: true
+          type: number
+      responses:
+        200:
+          description: "OK"
+        404:
+          description: "Not Found"
+        500:
+          description: "Server Error"
+
+# [GET] Messages
+  /applications/{token}/chats/{chatNumber}/messages:
+    get:
+      tags:
+        - messages
+      summary: Find Chat Messages
+      parameters:
+        - name: token
+          in: path
+          description: application token
+          required: true
           type: string
+        - name: chatNumber
+          in: path
+          description: chat number
+          required: true
+          type: number
+      responses:
+        200:
+          description: "OK"
+        500:
+          description: "Server Error"
+    # [POST] Messages
+    post:
+      tags:
+        - messages
+      summary: message Creation
+      parameters:
+        - name: token
+          in: path
+          description: application token
+          required: true
+          type: string
+        - name: chatNumber
+          in: path
+          description: chat number
+          required: true
+          type: number
+      responses:
+        201:
+          description: "Created"
+        400:
+          description: "Bad Request"
+        500:
+          description: "Server Error"
+    # [GET] Message
+  /applications/{token}/chats/{chatNumber}/messages/{messageNumber}:
+    get:
+      tags:
+        - messages
+      summary: find a message
+      parameters:
+        - name: token
+          in: path
+          description: application Token
+          required: true
+          type: string
+        - name: chatNumber
+          in: path
+          description: chat number
+          required: true
+          type: number
+        - name: messageNumber
+          in: path
+          description: message number
+          required: true
+          type: number
       responses:
         200:
           description: "OK"
