@@ -7,6 +7,7 @@
   "scripts": {
     "start": "npm run build && cross-env NODE_ENV=production node dist/server.js",
     "dev": "cross-env NODE_ENV=development nodemon",
+    "dev:worker": "cross-env NODE_ENV=development ts-node -r tsconfig-paths/register --transpile-only src/worker/index.ts",
     "build": "swc src -d dist --source-maps --copy-files",
     "build:tsc": "tsc && tsc-alias",
     "test": "jest --forceExit",
@@ -23,6 +24,7 @@
   },
   "dependencies": {
     "@prisma/client": "^3.7.0",
+    "amqplib": "^0.9.1",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.13.1",
     "compression": "^1.7.4",
