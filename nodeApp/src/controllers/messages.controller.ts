@@ -32,6 +32,19 @@ class MessagesController {
       next(error);
     }
   };
+
+  public searchMessages = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      const token = req.params.token;
+      const chatNumber = Number(req.params.chatNumber);
+      const query = req.query.query.toString()
+
+      const result = await this.messagesService.searchMessages(token, chatNumber, query);
+      res.status(200).json({ data: result, message: 'searchMessages' });
+    } catch (error) {
+      next(error);
+    }
+  };
 }
 
 export default MessagesController;

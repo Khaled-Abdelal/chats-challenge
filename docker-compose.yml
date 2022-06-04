@@ -59,6 +59,21 @@ services:
       - '6379:6379'
     networks:
       - backend
+  elasticsearch:
+    image: "elasticsearch:8.1.1"
+    ports: 
+      - 9200:9200
+    networks:
+      - backend
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - action.auto_create_index=true
+    healthcheck:
+      test: curl -u elastic:elastic -s -f elasticsearch:9200/_cat/health >/dev/null || exit 1
+      interval: 30s
+      timeout: 10s
+      retries: 5
 networks:
   backend:
     driver: bridge

@@ -1,4 +1,4 @@
-import { IsNumber, IsNumberString, IsString } from 'class-validator';
+import { IsNumber, IsNumberString, IsString, MinLength } from 'class-validator';
 
 export class CreateMessageDto {
   @IsString()
@@ -23,4 +23,12 @@ export class GetMessagesDto {
 export class GetMessageDto extends GetMessagesDto{
   @IsNumberString()
   public number: string
+}
+
+export class SearchMessagesDto extends GetMessagesDto {}
+
+export class SearchMessagesQueryDto {
+  @IsString()
+  @MinLength(1)
+  public query: string
 }

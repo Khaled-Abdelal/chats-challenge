@@ -23,6 +23,7 @@
     "schema": "src/prisma/schema.prisma"
   },
   "dependencies": {
+    "@elastic/elasticsearch": "^8.2.1",
     "@prisma/client": "^3.7.0",
     "amqplib": "^0.9.1",
     "class-transformer": "^0.5.1",

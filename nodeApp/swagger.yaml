@@ -218,6 +218,34 @@ paths:
           description: "Not Found"
         500:
           description: "Server Error"
+  /applications/{token}/chats/{chatNumber}/messages/search:
+    get:
+      tags:
+        - messages
+      summary: searchMessages
+      parameters:
+        - name: token
+          in: path
+          description: application Token
+          required: true
+          type: string
+        - name: chatNumber
+          in: path
+          description: chat number
+          required: true
+          type: number
+        - name: query
+          in: query
+          description: search text
+          required: true
+          type: string
+      responses:
+        200:
+          description: "OK"
+        404:
+          description: "Not Found"
+        500:
+          description: "Server Error"
 # definitions
 definitions:
   applications:
