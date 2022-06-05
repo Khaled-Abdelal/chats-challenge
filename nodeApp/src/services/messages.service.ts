@@ -8,7 +8,7 @@ class MessageService {
   private messages = new PrismaClient().message;
   private searchClient = searchClient.getConnection();
   public searchIndex = 'messages';
-  
+
   public async createMessage(messageData: CreateMessageDto): Promise<Message> {
     const createMessageData: Message = await this.messages.create({
       data: { ...messageData },
@@ -59,6 +59,7 @@ class MessageService {
 
   public async indexMessage(message: Message | MessageWithoutId): Promise<void> {
     if (isEmpty(message)) throw new Error('Record Invalid');
+    await this.ensureIndices();
     this.searchClient.index({
       index: this.searchIndex,
       document: {
@@ -72,9 +73,8 @@ class MessageService {
   }
 
   public async searchMessages(appToken: string, chatNumber: number, searchText: string) {
-    await this.ensureIndices()
+    await this.ensureIndices();
     const result = this.searchClient.search({
-      // TODO: fix error if index not created
       index: this.searchIndex,
       query: {
         bool: {
@@ -86,7 +86,7 @@ class MessageService {
       },
     });
     await this.searchClient.indices.refresh({ index: this.searchIndex });
-    return result; // TODO: have a better response object
+    return result; // TODO: return a better response instead of directly from elastic 
   }
 
   public async ensureIndices() {

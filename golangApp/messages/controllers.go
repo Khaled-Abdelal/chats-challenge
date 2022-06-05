@@ -20,7 +20,7 @@ func CreateMessage(ctx *gin.Context) {
 
 	applicationToken := ctx.Param("token")
 	var rBody CreateMessageRequestBody
-	if err := ctx.BindJSON(&rBody); err != nil {
+	if err := ctx.BindJSON(&rBody); err != nil { // TODO: separate validations
 		log.Error("Request Body is invalid: ", err)
 		ctx.JSON(http.StatusBadRequest, gin.H{
 			"message": "Request Body is invalid",
@@ -36,7 +36,7 @@ func CreateMessage(ctx *gin.Context) {
 		return
 	}
 	redisKey := fmt.Sprintf("%s_%d", applicationToken, chatNumber)
-	inc := rdb.Incr(ctx, redisKey) // if the key doesn't exist the consumer will discard the job
+	inc := rdb.Incr(ctx, redisKey) // if the key doesn't exist the consumer will discard the job, TODO: keep track of creation ids to check and refuse invalid keys
 	err = inc.Err()
 	if err != nil {
 		log.Error("Error with Redis!: ", err)

@@ -23,12 +23,12 @@ export class MessageCreation {
     try {
       const chat = await this.chatService.findApplicationChat(message.applicationToken, message.chatNumber);
       if (isEmpty(chat)) {
-        // chat not found might not have been created yet?
+        // TODO: chat not found might not have been created yet?
         logger.info(`Create message job ignored for Now`);
         return;
       }
       const messageDB = await this.messageService.createMessage(message);
-      await new MessageIndexing().publish(messageDB) // what if this fails ?
+      await new MessageIndexing().publish(messageDB) // TODO what if this fails ?
       channel.ack(msg);
       logger.info(`Message number ${message.number} Created for chat ${message.chatNumber} for app ${message.applicationToken}`);
     } catch (err) {
