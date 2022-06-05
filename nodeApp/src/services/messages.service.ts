@@ -3,11 +3,12 @@ import { MessageWithoutId } from '@/interfaces/message.interface';
 import { isEmpty } from '@/utils/util';
 import { PrismaClient, Message } from '@prisma/client';
 import searchClient from '@/config/elasticSearch';
+import { logger } from '@/utils/logger';
 class MessageService {
   private messages = new PrismaClient().message;
   private searchClient = searchClient.getConnection();
   public searchIndex = 'messages';
-
+  
   public async createMessage(messageData: CreateMessageDto): Promise<Message> {
     const createMessageData: Message = await this.messages.create({
       data: { ...messageData },
@@ -57,7 +58,7 @@ class MessageService {
   }
 
   public async indexMessage(message: Message | MessageWithoutId): Promise<void> {
-    if (isEmpty(message)) throw new Error('Record Not Found');
+    if (isEmpty(message)) throw new Error('Record Invalid');
     this.searchClient.index({
       index: this.searchIndex,
       document: {
@@ -70,8 +71,10 @@ class MessageService {
     await this.searchClient.indices.refresh({ index: this.searchIndex });
   }
 
-  public async searchMessages(appToken: string, chatNumber: number, searchText: string){
-    const result = this.searchClient.search({ // TODO: fix error if index not created
+  public async searchMessages(appToken: string, chatNumber: number, searchText: string) {
+    await this.ensureIndices()
+    const result = this.searchClient.search({
+      // TODO: fix error if index not created
       index: this.searchIndex,
       query: {
         bool: {
@@ -84,6 +87,16 @@ class MessageService {
     });
     await this.searchClient.indices.refresh({ index: this.searchIndex });
     return result; // TODO: have a better response object
+  }
+
+  public async ensureIndices() {
+    const res = await this.searchClient.indices.exists({ index: this.searchIndex });
+    if (res) {
+      logger.info('Index already exist');
+      return;
+    }
+    await this.searchClient.indices.create({ index: this.searchIndex });
+    logger.info('Index created');
   }
 }
 
