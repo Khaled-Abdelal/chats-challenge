@@ -65,6 +65,6 @@ const updateMessagesCountHandler = async () => {
   }
 };
 
-const job = new CronJob('*/20 * * * * *', updateMessagesCountHandler, null, true);
+const job = new CronJob('* */20 * * * *', updateMessagesCountHandler, null, true);
 
 export default job;

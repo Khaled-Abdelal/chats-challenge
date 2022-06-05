@@ -61,6 +61,6 @@ const updateChatsCountHandler = async () => {
   }
 };
 
-const job = new CronJob('*/20 * * * * *', updateChatsCountHandler, null, true);
+const job = new CronJob('* */20 * * * *', updateChatsCountHandler, null, true);
 
 export default job;
