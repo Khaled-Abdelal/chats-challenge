@@ -13,6 +13,7 @@ class ApplicationService {
       select: {
         name: true,
         token: true,
+        chatsCount: true,
       },
     });
     return allApps;
@@ -21,7 +22,7 @@ class ApplicationService {
   public async findApplicationByToken(token: string): Promise<ApplicationWithoutId> {
     if (isEmpty(token)) throw new HttpException(400, 'Token is invalid');
 
-    const findAPP: ApplicationWithoutId = await this.applications.findUnique({ where: { token }, select: { name: true, token: true } });
+    const findAPP: ApplicationWithoutId = await this.applications.findUnique({ where: { token }, select: { name: true, token: true, chatsCount: true } });
     if (!findAPP) throw new HttpException(404, 'Record not found');
 
     return findAPP;
@@ -32,7 +33,7 @@ class ApplicationService {
     const token = uuidv4();
     const createApplicationData: ApplicationWithoutId = await this.applications.create({
       data: { token, ...applicationData },
-      select: { name: true, token: true },
+      select: { name: true, token: true, chatsCount: true },
     });
     return createApplicationData;
   }
@@ -43,7 +44,7 @@ class ApplicationService {
       const updateData: ApplicationWithoutId = await this.applications.update({
         where: { token },
         data: { ...applicationData },
-        select: { name: true, token: true },
+        select: { name: true, token: true, chatsCount: true },
       });
       return updateData;
     } catch (error) {

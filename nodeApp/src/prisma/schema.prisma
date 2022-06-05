@@ -11,31 +11,40 @@ generator client {
 }
 
 model Application {
-  id      Int       @id @default(autoincrement())
-  token   String    @unique
-  name    String
-  Chat    Chat[]
+  id         Int    @id @default(autoincrement())
+  token      String @unique
+  name       String
+  chatsCount Int    @default(0) @map("chats_count")
+  Chat       Chat[]
 }
 
 model Chat {
   id               Int         @id @default(autoincrement())
   number           Int
-  applicationToken String
+  applicationToken String      @map("application_token")
   application      Application @relation(fields: [applicationToken], references: [token])
+  updatedAt        DateTime    @default(now()) @updatedAt @map("updated_at")
+  createdAt        DateTime    @default(now()) @map("created_at")
+  messagesCount    Int         @default(0) @map("messages_count")
+  Message          Message[]
 
   @@unique(fields: [applicationToken, number])
-  Message Message[]
+  @@index([updatedAt])
+  @@index([createdAt])
 }
 
 model Message {
-  id               Int         @id @default(autoincrement())
+  id               Int      @id @default(autoincrement())
   number           Int
   chatNumber       Int
-  applicationToken String
-  content String
-  
+  applicationToken String   @map("application_token")
+  content          String
+  updatedAt        DateTime    @default(now()) @updatedAt @map("updated_at")
+  createdAt        DateTime    @default(now()) @map("created_at")
   // relations
-  chat             Chat        @relation(fields: [applicationToken, chatNumber], references: [applicationToken, number])
+  chat Chat @relation(fields: [applicationToken, chatNumber], references: [applicationToken, number])
 
   @@unique(fields: [applicationToken, chatNumber, number])
+  @@index([updatedAt])
+  @@index([createdAt])
 }

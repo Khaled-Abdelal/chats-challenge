@@ -23,9 +23,8 @@ export class MessageCreation {
     try {
       const chat = await this.chatService.findApplicationChat(message.applicationToken, message.chatNumber);
       if (isEmpty(chat)) {
-        // chat not found
-        channel.ack(msg);
-        logger.info(`Create message job discarded`);
+        // chat not found might not have been created yet?
+        logger.info(`Create message job ignored for Now`);
         return;
       }
       const messageDB = await this.messageService.createMessage(message);

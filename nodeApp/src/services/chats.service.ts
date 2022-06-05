@@ -20,7 +20,10 @@ class ChatService {
       select: {
         id: false,
         number: true,
-        applicationToken: true
+        applicationToken: true,
+        updatedAt: true,
+        createdAt: true,
+        messagesCount: true
       },
     });
     return allChats;
@@ -37,7 +40,10 @@ class ChatService {
       select: {
         id: false,
         number: true,
-        applicationToken: true
+        applicationToken: true,
+        updatedAt: true,
+        createdAt: true,
+        messagesCount: true
       },
     });
     return chat;

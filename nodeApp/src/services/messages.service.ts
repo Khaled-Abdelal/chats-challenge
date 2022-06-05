@@ -27,6 +27,8 @@ class MessageService {
         applicationToken: true,
         chatNumber: true,
         content: true,
+        updatedAt: true,
+        createdAt: true,
       },
     });
     return messages;
@@ -47,6 +49,8 @@ class MessageService {
         applicationToken: true,
         content: true,
         chatNumber: true,
+        updatedAt: true,
+        createdAt: true,
       },
     });
     return message;
@@ -79,7 +83,7 @@ class MessageService {
       },
     });
     await this.searchClient.indices.refresh({ index: this.searchIndex });
-    return result;
+    return result; // TODO: have a better response object
   }
 }
 
