@@ -30,6 +30,7 @@ The project is split into three main components:
 
 ## To Do
 
+- [ ] Search Todo in the project comments
 - [ ] Add more tests
 - [ ] Add CI/CD pipeline  
 
