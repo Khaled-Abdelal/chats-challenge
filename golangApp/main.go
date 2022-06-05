@@ -7,6 +7,7 @@ import (
 	"github.com/Khaled-Abdelal/chats-challenge/golangApp/common"
 	"github.com/Khaled-Abdelal/chats-challenge/golangApp/messages"
 	"github.com/gin-gonic/gin"
+	log "github.com/sirupsen/logrus"
 )
 
 func main() {
@@ -20,6 +21,8 @@ func main() {
 
 	r.POST("/applications/:token/chats", chats.CreateChat)
 	r.POST("/applications/:token/chats/:number/messages", messages.CreateMessage)
+
+	log.Info("GoLang Server is up ....")
 	r.Run(common.GetServerPort()) // listen and serve
 }
 

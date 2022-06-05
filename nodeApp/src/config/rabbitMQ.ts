@@ -4,7 +4,7 @@ class RabbitMQ {
   private AMPQConnectionString: string;
   public channel: Channel;
   constructor() {
-    this.AMPQConnectionString = 'amqp://guest:guest@localhost:5672/';
+    this.AMPQConnectionString = process.env.RABBIT_MQ_CONNECTION_STRING || 'amqp://guest:guest@localhost:5672/';
   }
 
   connect = async () => {

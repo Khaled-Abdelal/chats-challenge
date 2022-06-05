@@ -1,8 +1,9 @@
 package common
 
 import (
-	"log"
 	"os"
+
+	log "github.com/sirupsen/logrus"
 
 	"github.com/joho/godotenv"
 )

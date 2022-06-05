@@ -71,7 +71,7 @@ class MessageService {
   }
 
   public async searchMessages(appToken: string, chatNumber: number, searchText: string){
-    const result = this.searchClient.search({
+    const result = this.searchClient.search({ // TODO: fix error if index not created
       index: this.searchIndex,
       query: {
         bool: {

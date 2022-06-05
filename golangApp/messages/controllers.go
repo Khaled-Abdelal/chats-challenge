@@ -45,10 +45,12 @@ func CreateMessage(ctx *gin.Context) {
 		})
 		return
 	}
-	m := NewMessage(applicationToken, chatNumber, int(inc.Val()), rBody.Content)
+	val := int(inc.Val())
+	m := NewMessage(applicationToken, chatNumber, val, rBody.Content)
 	PublishMessageCreated(m, rabbitMQSession)
 
 	ctx.JSON(http.StatusCreated, gin.H{
-		"message": "creating",
+		"message":       "creating",
+		"messageNumber": val,
 	})
 }

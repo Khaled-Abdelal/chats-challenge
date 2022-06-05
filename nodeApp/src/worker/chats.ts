@@ -26,9 +26,8 @@ export class ChatCreation {
       logger.info(`Chat number ${chat.number} Created for app ${app.token}`);
     } catch (err) {
       if (err instanceof HttpException) {
-        // token is invalid or app not found
-        channel.ack(msg);
-        logger.info(`Create Chat message discarded`);
+        // token is invalid .. app not found
+        logger.info(`Create Chat discarded`);
         return;
       }
       // TODO: handle failed messages

@@ -4,7 +4,7 @@ class SearchClient {
     private connection
     constructor() {
         this.connection = new Client({
-            node: 'http://localhost:9200'
+            node: process.env.ELASTICSEARCH_CONNECTION_STRING || 'http://localhost:9200'
         })
     }
 

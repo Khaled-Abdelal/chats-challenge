@@ -172,6 +172,12 @@ paths:
         - messages
       summary: message Creation
       parameters:
+        - name: body
+          in: body
+          description: message creation object
+          required: true
+          schema:
+            $ref: "#/definitions/messageCreation"
         - name: token
           in: path
           description: application token
@@ -256,6 +262,13 @@ definitions:
       name:
         type: string
         description: application name
+  messageCreation:
+    required:
+      - content
+    properties:
+      content:
+        type: string
+        description: message content
 
 schemes:
   - https

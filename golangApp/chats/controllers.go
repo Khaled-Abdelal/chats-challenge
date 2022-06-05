@@ -22,10 +22,12 @@ func CreateChat(ctx *gin.Context) {
 		})
 		return
 	}
-	c := NewChat(applicationToken, int(inc.Val()))
+	val := int(inc.Val())
+	c := NewChat(applicationToken, val)
 	PublishChatCreated(c, rabbitMQSession)
 
 	ctx.JSON(http.StatusCreated, gin.H{
-		"message": "creating",
+		"message":    "creating",
+		"chatNumber": val,
 	})
 }
