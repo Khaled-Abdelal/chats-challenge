@@ -2,11 +2,13 @@
 
 Chats challenge is a system that create chatting systems.
 
-The project is split into five components:
+The project is split into three main components:
 
 1. [NodeApp](./nodeApp) a nodejs express app that manages workers, crons, most of crud.
 
 2. [GolangApp](./golanApp/) A Golang service which handles Chat and Message creation requests.
+
+3. [NginxGateway](./nginx/) A reverse proxy acts as a gateway to the system.  
 
 ## Getting Started
 
