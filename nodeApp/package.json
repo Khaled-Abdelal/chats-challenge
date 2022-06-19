@@ -6,9 +6,9 @@
   "license": "ISC",
   "scripts": {
     "start": "npm run build && cross-env NODE_ENV=production node dist/server.js",
-    "dev": "cross-env NODE_ENV=development nodemon",
-    "dev:worker": "cross-env NODE_ENV=development ts-node -r tsconfig-paths/register --transpile-only src/worker/index.ts",
-    "dev:cron": "cross-env NODE_ENV=development ts-node -r tsconfig-paths/register --transpile-only src/crons/index.ts",
+    "dev": "cross-env NODE_ENV=development npm run prisma:generate && nodemon",
+    "dev:worker": "cross-env NODE_ENV=development npm run prisma:generate && ts-node -r tsconfig-paths/register --transpile-only src/worker/index.ts",
+    "dev:cron": "cross-env NODE_ENV=development npm run prisma:generate && ts-node -r tsconfig-paths/register --transpile-only src/crons/index.ts",
     "build": "swc src -d dist --source-maps --copy-files",
     "build:tsc": "tsc && tsc-alias",
     "test": "jest --forceExit",
