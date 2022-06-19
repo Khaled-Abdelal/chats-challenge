@@ -74,7 +74,7 @@ class MessageService {
 
   public async searchMessages(appToken: string, chatNumber: number, searchText: string) {
     await this.ensureIndices();
-    const result = this.searchClient.search({
+    const result = await this.searchClient.search({
       index: this.searchIndex,
       query: {
         bool: {
@@ -86,7 +86,7 @@ class MessageService {
       },
     });
     await this.searchClient.indices.refresh({ index: this.searchIndex });
-    return result; // TODO: return a better response instead of directly from elastic 
+    return result?.hits; // TODO: return a better response instead of directly from elastic 
   }
 
   public async ensureIndices() {
